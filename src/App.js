@@ -1,23 +1,43 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Page1 from "./Components/Page1";
+import Page2 from "./Components/Page2";
+import Page3 from "./Components/Page3";
+import Page4 from "./Components/Page4";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import './App.css';
 
 function App() {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer); 
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {loading && (
+        <div className="loader-container">
+          <ClimbingBoxLoader
+            color="#fff200"
+            loading={loading}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
+      {!loading && (
+        <>
+          <Page1 />
+          <Page2 />
+          <Page3 />
+          <Page4 />
+        </>
+      )}
     </div>
   );
 }
